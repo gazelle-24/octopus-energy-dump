@@ -34,7 +34,7 @@ def main():
     res_list = []
     r = requests.get(f"https://api.octopus.energy/v1/electricity-meter-points/{MPAN}/meters/{SERIAL_NUMBER}/consumption/?period_from={start_datetime}&period_to={end_datetime}&order_by=period", auth=(API_KEY, ''))
     for i in r.json()['results']:
-        res_list.append([i['consumption'], i['interval_start'], i['interval_end']])
+        res_list.append([i['consumption'], i['interval_start'].replace('T',' ')[:19], i['interval_end'].replace('T',' ')[:19]])
 
     # Now add it to the Google Sheet
     service_account = gspread.service_account()
